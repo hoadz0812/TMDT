@@ -3,6 +3,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
+import HomeAdmin from "./pages/Admin/HomeAdmin";
 
 const AppRoute = () => {
     return (
@@ -11,6 +12,9 @@ const AppRoute = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/" element={<Home />} />
+            </Routes>
+            <Routes>
+                <Route path="/admin" element={<HomeAdmin />} />
             </Routes>
         </BrowserRouter>
     )
