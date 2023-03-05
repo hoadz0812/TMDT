@@ -1,15 +1,17 @@
 const express = require('express');
-const port = 4000;
-const db = require('./config/db');
-const routes = require('./routes');
-const cors = require('cors')
-
-db.connect();
 const app = express();
+const routes = require('./routes');
 
-app.use(cors());
+const port = 5000;
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 routes(app);
 
-app.listen(port, () => console.log(`Example app listening at http:localhost:${port}`));
+app.use('/', (req, res) => {
+    res.send('Hello word!!!');
+});
+
+app.listen(port, () => {
+    console.log(`listening port ${port}`);
+});

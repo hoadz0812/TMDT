@@ -1,40 +1,20 @@
-const mongoose = require('mongoose');
+const mysql = require('mysql');
 
-mongoose.set('strictQuery', false);
-async function connect() {
-    try {
-        // await mongoose.connect('mongodb+srv://taquyet:bntS6AYm0vzxFN31@ttssaomai.k3pxdhe.mongodb.net/?retryWrites=true&w=majority');
-        await mongoose.connect('mongodb://127.0.0.1:27017/TTS_BE_SAOMAI');
-        console.log('Connect successfully');
-    } catch (error) {
-        console.log('Connect failure', error);
+const connection = mysql.createConnection({
+    host: 'sql.freedb.tech',
+    port: 3306,
+    database: 'freedb_tts_saomai',
+    user: 'freedb_tts_be_saomai',
+    password: 'zxC#gX&$3D7Pb%@',
+});
+
+connection.connect((err) => {
+    if (err) {
+        console.error('Error connecting: ' + err.stack);
+        return;
     }
-}
 
-// const mysql = require('mysql')
+    console.log('Connected as id ' + connection.threadId);
+});
 
-// const connect = () =>{
-//     try {
-//         const connection = mysql.createConnection({
-//             host: 'localhost',
-//             port: 3306,
-//             database: 'shoestore',
-//             user: 'root',
-//             password: ''
-//         })
-        
-//         connection.connect((err) => {
-//             if (err) {
-//                 console.error('Error connecting: ' + err.stack);
-//                 return;
-//             }
-        
-//             console.log('Connected as id ' + connection.threadId);
-//         });
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
-
-
-module.exports = { connect };
+module.exports = connection;
