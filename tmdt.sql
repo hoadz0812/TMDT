@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 04, 2023 at 04:28 AM
+-- Generation Time: Mar 06, 2023 at 03:35 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `address` (
   `idAddress` int(11) NOT NULL,
+  `idUser` int(11) DEFAULT NULL,
   `idDistrict` int(11) DEFAULT NULL,
   `xa` varchar(50) NOT NULL,
   `phuong` varchar(50) NOT NULL,
@@ -72,6 +73,7 @@ CREATE TABLE `cart` (
   `idCart` int(11) NOT NULL,
   `idUser` int(11) DEFAULT NULL,
   `idProduct` int(11) DEFAULT NULL,
+  `soluong` int(11) NOT NULL,
   `note` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -956,10 +958,10 @@ CREATE TABLE `replies` (
 
 CREATE TABLE `users` (
   `idUser` int(11) NOT NULL,
+  `email` varchar(45) NOT NULL,
   `fullname` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `phone` int(11) NOT NULL,
-  `idAddress` int(11) DEFAULT NULL
+  `phone` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -971,7 +973,8 @@ CREATE TABLE `users` (
 --
 ALTER TABLE `address`
   ADD PRIMARY KEY (`idAddress`),
-  ADD KEY `idDistrict` (`idDistrict`);
+  ADD KEY `idDistrict` (`idDistrict`),
+  ADD KEY `idUser` (`idUser`);
 
 --
 -- Indexes for table `admin`
@@ -1046,8 +1049,7 @@ ALTER TABLE `replies`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`idUser`),
-  ADD KEY `users_ibfk_1` (`idAddress`);
+  ADD PRIMARY KEY (`idUser`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -1133,7 +1135,8 @@ ALTER TABLE `users`
 -- Constraints for table `address`
 --
 ALTER TABLE `address`
-  ADD CONSTRAINT `address_ibfk_1` FOREIGN KEY (`idDistrict`) REFERENCES `district` (`idDistrict`);
+  ADD CONSTRAINT `address_ibfk_1` FOREIGN KEY (`idDistrict`) REFERENCES `district` (`idDistrict`),
+  ADD CONSTRAINT `address_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `users` (`idUser`);
 
 --
 -- Constraints for table `bill`
@@ -1179,12 +1182,6 @@ ALTER TABLE `product`
 --
 ALTER TABLE `replies`
   ADD CONSTRAINT `replies_ibfk_1` FOREIGN KEY (`idComment`) REFERENCES `comment` (`idComment`);
-
---
--- Constraints for table `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`idAddress`) REFERENCES `address` (`idAddress`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
