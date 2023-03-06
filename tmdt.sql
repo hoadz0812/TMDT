@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 06, 2023 at 03:35 AM
+-- Generation Time: Mar 06, 2023 at 05:08 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -851,10 +851,22 @@ CREATE TABLE `product` (
   `description` longtext NOT NULL,
   `type` varchar(50) NOT NULL,
   `status` varchar(50) NOT NULL,
+  `total` int(11) NOT NULL,
   `img1` varchar(255) NOT NULL,
   `img2` varchar(255) NOT NULL,
   `img3` varchar(255) NOT NULL,
   `img4` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products`
+--
+
+CREATE TABLE `products` (
+  `idCart` int(11) DEFAULT NULL,
+  `idProduct` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1033,6 +1045,13 @@ ALTER TABLE `product`
   ADD KEY `idCategory` (`idCategory`);
 
 --
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+  ADD KEY `idCart` (`idCart`),
+  ADD KEY `idProduct` (`idProduct`);
+
+--
 -- Indexes for table `province`
 --
 ALTER TABLE `province`
@@ -1176,6 +1195,13 @@ ALTER TABLE `levels`
 --
 ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`idCategory`) REFERENCES `category` (`idCategory`);
+
+--
+-- Constraints for table `products`
+--
+ALTER TABLE `products`
+  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`idCart`) REFERENCES `cart` (`idCart`),
+  ADD CONSTRAINT `products_ibfk_2` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`);
 
 --
 -- Constraints for table `replies`
