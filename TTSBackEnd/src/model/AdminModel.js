@@ -1,6 +1,6 @@
 const connection = require('../config/db');
 
-const getAllUsers = (callback) => {
+const getAllAdmin = (callback) => {
     connection.query(
         'SELECT users.email, users.password, users.phone,province.province_name, district.name, address.diachi FROM users JOIN address ON users.idUser = address.idUser JOIN district ON address.idDistrict = district.idDistrict JOIN province ON district.idProvince = province.idProvince',
         function (error, results) {
