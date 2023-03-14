@@ -9,4 +9,6 @@ const getAllUsers = (callback) => {
     });
 };
 
-module.exports = { getAllUsers };
+
+
+module.exports = { getAllUsers};

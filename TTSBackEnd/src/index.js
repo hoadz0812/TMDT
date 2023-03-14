@@ -8,9 +8,6 @@ app.use(express.urlencoded({ extended: true }));
 
 routes(app);
 
-app.use('/', (req, res) => {
-    res.send('Hello word!!!');
-});
 
 app.listen(port, () => {
     console.log(`listening port ${port}`);
