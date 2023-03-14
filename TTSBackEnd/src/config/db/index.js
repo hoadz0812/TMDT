@@ -1,20 +1,20 @@
 const mysql = require('mysql');
 
-const connection = mysql.createConnection({
-    host: 'sql.freedb.tech',
+const con = mysql.createConnection({
+    host: 'localhost',
     port: 3306,
-    database: 'freedb_tts_saomai',
-    user: 'freedb_tts_be_saomai',
-    password: 'zxC#gX&$3D7Pb%@',
+    user: 'root',
+    password: '',
+    database: 'tmdt',
 });
 
-connection.connect((err) => {
+con.connect((err) => {
     if (err) {
         console.error('Error connecting: ' + err.stack);
         return;
     }
 
-    console.log('Connected as id ' + connection.threadId);
+    console.log('Connected as id ' + con.threadId);
 });
 
-module.exports = connection;
+module.exports = con;
