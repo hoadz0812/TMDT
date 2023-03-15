@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 06, 2023 at 05:26 AM
+-- Generation Time: Mar 15, 2023 at 05:28 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -31,9 +31,7 @@ CREATE TABLE `address` (
   `idAddress` int(11) NOT NULL,
   `idUser` int(11) DEFAULT NULL,
   `idDistrict` int(11) DEFAULT NULL,
-  `xa` varchar(50) NOT NULL,
-  `phuong` varchar(50) NOT NULL,
-  `diachi` longtext NOT NULL
+  `address_name` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -46,21 +44,7 @@ CREATE TABLE `admin` (
   `idAdmin` int(11) NOT NULL,
   `username` varchar(30) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `level` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `bill`
---
-
-CREATE TABLE `bill` (
-  `idBill` int(11) NOT NULL,
-  `idUser` int(11) DEFAULT NULL,
-  `idProduct` int(11) DEFAULT NULL,
-  `paymentMethod` varchar(50) NOT NULL,
-  `billDate` date NOT NULL
+  `isSuper` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -72,9 +56,13 @@ CREATE TABLE `bill` (
 CREATE TABLE `cart` (
   `idCart` int(11) NOT NULL,
   `idUser` int(11) DEFAULT NULL,
-  `idProduct` int(11) DEFAULT NULL,
-  `soluong` int(11) NOT NULL,
-  `note` varchar(255) DEFAULT NULL
+  `note` varchar(255) DEFAULT NULL,
+  `product` text DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `total` int(11) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `creatAt` datetime DEFAULT NULL,
+  `deliveryAt` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -86,21 +74,6 @@ CREATE TABLE `cart` (
 CREATE TABLE `category` (
   `idCategory` int(11) NOT NULL,
   `title` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `comment`
---
-
-CREATE TABLE `comment` (
-  `idComment` int(11) NOT NULL,
-  `idProduct` int(11) DEFAULT NULL,
-  `idUser` int(11) DEFAULT NULL,
-  `content` longtext NOT NULL,
-  `star_count` int(11) DEFAULT NULL,
-  `dateComment` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -829,17 +802,6 @@ INSERT INTO `district` (`idDistrict`, `idProvince`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `levels`
---
-
-CREATE TABLE `levels` (
-  `level` int(11) NOT NULL,
-  `name` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `product`
 --
 
@@ -852,22 +814,30 @@ CREATE TABLE `product` (
   `type` varchar(50) NOT NULL,
   `status` varchar(50) NOT NULL,
   `total` int(11) NOT NULL,
-  `img1` varchar(255) DEFAULT NULL,
-  `img2` varchar(255) DEFAULT NULL,
-  `img3` varchar(255) DEFAULT NULL,
-  `img4` varchar(255) DEFAULT NULL
+  `img` varchar(255) DEFAULT NULL,
+  `productRating` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `products`
+-- Dumping data for table `product`
 --
 
-CREATE TABLE `products` (
-  `idCart` int(11) DEFAULT NULL,
-  `idProduct` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `product` (`idProduct`, `idCategory`, `nameProduct`, `price`, `description`, `type`, `status`, `total`, `img`, `productRating`) VALUES
+(1, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 0),
+(2, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 0),
+(3, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 0),
+(4, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 0),
+(5, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 0),
+(6, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 3),
+(7, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 3),
+(8, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 3),
+(9, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 3),
+(10, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 3),
+(11, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 3),
+(12, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 3),
+(13, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 3),
+(14, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 3),
+(15, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 3);
 
 -- --------------------------------------------------------
 
@@ -952,15 +922,39 @@ INSERT INTO `province` (`idProvince`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `replies`
+-- Table structure for table `rating`
 --
 
-CREATE TABLE `replies` (
-  `idReplies` int(11) NOT NULL,
-  `idComment` int(11) DEFAULT NULL,
-  `replierName` varchar(50) NOT NULL,
-  `replierText` longtext NOT NULL
+CREATE TABLE `rating` (
+  `idComment` int(11) NOT NULL,
+  `idProduct` int(11) DEFAULT NULL,
+  `idUser` int(11) DEFAULT NULL,
+  `content` varchar(500) NOT NULL,
+  `star` int(11) NOT NULL,
+  `dateComment` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `rating`
+--
+
+INSERT INTO `rating` (`idComment`, `idProduct`, `idUser`, `content`, `star`, `dateComment`) VALUES
+(1, 1, 1, 'undefined', 0, 0),
+(9, 1, 1, 'as12345fafadsf99999', 0, 10),
+(10, 1, 1, 'as12345fafadsf99999', 4, 10),
+(11, 2, 1, 'as12345fafadsf99999', 4, 10),
+(12, 2, 2, 'as12345fafadsf99999', 2, 10),
+(13, 2, 2, 'as12345fafadsf99999', 2, 10),
+(14, 6, 1, 'as12345fafadsf99999', 2, 10),
+(15, 6, 2, 'as12345fafadsf99999', 4, 10),
+(16, 6, 5, 'as12345fafadsf99999', 3, 10),
+(17, 6, 5, 'as12345fafadsf99999', 3, 10),
+(18, 6, 5, 'as12345fafadsf99999', 3, 10),
+(19, 6, 5, 'as12345fafadsf99999', 3, 10),
+(20, 6, 5, 'as12345fafadsf99999', 3, 10),
+(21, 6, 5, 'as12345fafadsf99999', 3, 10),
+(22, 6, 5, 'as12345fafadsf99999', 3, 10),
+(23, 6, 5, 'as12345fafadsf99999', 3, 10);
 
 -- --------------------------------------------------------
 
@@ -972,9 +966,34 @@ CREATE TABLE `users` (
   `idUser` int(11) NOT NULL,
   `email` varchar(45) NOT NULL,
   `fullname` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `phone` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`idUser`, `email`, `fullname`, `password`, `phone`) VALUES
+(1, 'hoaison@gmai.com', 'son', '0924525', 903493214),
+(2, 'hoaison@gmai.com', 'son', '0924525', 903493214),
+(3, 'hoaison@gmai.com', 'son', '0924525', 903493214),
+(4, 'hoaison@gmai.com', 'son', '0924525', 903493214),
+(5, 'hoaison@gmai.com', 'son', '0924525', 903493214),
+(6, 'hoaison@gmai.com', 'son', '0924525', 903493214),
+(7, 'hoaison@gmai.com', 'son', '0924525', 903493214),
+(8, 'hoaison@gmai.com', 'son', '0924525', 903493214),
+(9, 'hoaison@gmai.com', 'son', '0924525', 903493214),
+(10, 'hoaison@gmai.com', 'son', '0924525', 903493214),
+(11, 'hoaison@gmai.com', 'son', '0924525', 903493214),
+(12, 'hoaison@gmai.com', 'son', '0924525', 903493214),
+(13, '', 'undefined', '', 0),
+(14, 'hoaison@gmai.com', 'son', '0924525', 903493214),
+(15, 'hoaison@gmai.com', 'son', '0924525', 903493214),
+(16, 'hoaison@gmai.com', 'son', '0924525', 903493214),
+(17, 'hoaison@gmai.com', 'son', '0924525', 903493214),
+(18, 'hoaison@gmai.com', 'son', '0924525', 903493214),
+(19, 'hoaison@gmai.com', 'son', '0924525', 903493214);
 
 --
 -- Indexes for dumped tables
@@ -995,34 +1014,18 @@ ALTER TABLE `admin`
   ADD PRIMARY KEY (`idAdmin`);
 
 --
--- Indexes for table `bill`
---
-ALTER TABLE `bill`
-  ADD PRIMARY KEY (`idBill`),
-  ADD KEY `idUser` (`idUser`),
-  ADD KEY `idProduct` (`idProduct`);
-
---
 -- Indexes for table `cart`
 --
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`idCart`),
   ADD KEY `idUser` (`idUser`),
-  ADD KEY `idProduct` (`idProduct`);
+  ADD KEY `idProduct` (`product`(768));
 
 --
 -- Indexes for table `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`idCategory`);
-
---
--- Indexes for table `comment`
---
-ALTER TABLE `comment`
-  ADD PRIMARY KEY (`idComment`),
-  ADD KEY `idProduct` (`idProduct`),
-  ADD KEY `idUser` (`idUser`);
 
 --
 -- Indexes for table `district`
@@ -1032,24 +1035,11 @@ ALTER TABLE `district`
   ADD KEY `idProvince` (`idProvince`);
 
 --
--- Indexes for table `levels`
---
-ALTER TABLE `levels`
-  ADD PRIMARY KEY (`level`);
-
---
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`idProduct`),
   ADD KEY `idCategory` (`idCategory`);
-
---
--- Indexes for table `products`
---
-ALTER TABLE `products`
-  ADD KEY `idCart` (`idCart`),
-  ADD KEY `idProduct` (`idProduct`);
 
 --
 -- Indexes for table `province`
@@ -1058,11 +1048,12 @@ ALTER TABLE `province`
   ADD PRIMARY KEY (`idProvince`);
 
 --
--- Indexes for table `replies`
+-- Indexes for table `rating`
 --
-ALTER TABLE `replies`
-  ADD PRIMARY KEY (`idReplies`),
-  ADD KEY `idComment` (`idComment`);
+ALTER TABLE `rating`
+  ADD PRIMARY KEY (`idComment`),
+  ADD KEY `idProduct` (`idProduct`),
+  ADD KEY `idUser` (`idUser`);
 
 --
 -- Indexes for table `users`
@@ -1087,12 +1078,6 @@ ALTER TABLE `admin`
   MODIFY `idAdmin` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `bill`
---
-ALTER TABLE `bill`
-  MODIFY `idBill` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
@@ -1105,28 +1090,16 @@ ALTER TABLE `category`
   MODIFY `idCategory` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `comment`
---
-ALTER TABLE `comment`
-  MODIFY `idComment` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `district`
 --
 ALTER TABLE `district`
   MODIFY `idDistrict` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=706;
 
 --
--- AUTO_INCREMENT for table `levels`
---
-ALTER TABLE `levels`
-  MODIFY `level` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `idProduct` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idProduct` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `province`
@@ -1135,16 +1108,16 @@ ALTER TABLE `province`
   MODIFY `idProvince` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
--- AUTO_INCREMENT for table `replies`
+-- AUTO_INCREMENT for table `rating`
 --
-ALTER TABLE `replies`
-  MODIFY `idReplies` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `rating`
+  MODIFY `idComment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Constraints for dumped tables
@@ -1158,25 +1131,10 @@ ALTER TABLE `address`
   ADD CONSTRAINT `address_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `users` (`idUser`);
 
 --
--- Constraints for table `bill`
---
-ALTER TABLE `bill`
-  ADD CONSTRAINT `bill_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `users` (`idUser`),
-  ADD CONSTRAINT `bill_ibfk_2` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`);
-
---
 -- Constraints for table `cart`
 --
 ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `users` (`idUser`),
-  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`);
-
---
--- Constraints for table `comment`
---
-ALTER TABLE `comment`
-  ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`),
-  ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `users` (`idUser`);
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `users` (`idUser`);
 
 --
 -- Constraints for table `district`
@@ -1185,29 +1143,16 @@ ALTER TABLE `district`
   ADD CONSTRAINT `district_ibfk_1` FOREIGN KEY (`idProvince`) REFERENCES `province` (`idProvince`);
 
 --
--- Constraints for table `levels`
---
-ALTER TABLE `levels`
-  ADD CONSTRAINT `admin_levels` FOREIGN KEY (`level`) REFERENCES `admin` (`idAdmin`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
 -- Constraints for table `product`
 --
 ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`idCategory`) REFERENCES `category` (`idCategory`);
 
 --
--- Constraints for table `products`
+-- Constraints for table `rating`
 --
-ALTER TABLE `products`
-  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`idCart`) REFERENCES `cart` (`idCart`),
-  ADD CONSTRAINT `products_ibfk_2` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`);
-
---
--- Constraints for table `replies`
---
-ALTER TABLE `replies`
-  ADD CONSTRAINT `replies_ibfk_1` FOREIGN KEY (`idComment`) REFERENCES `comment` (`idComment`);
+ALTER TABLE `rating`
+  ADD CONSTRAINT `rating_ibfk_1` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
