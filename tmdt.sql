@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2023 at 05:28 AM
+-- Generation Time: Mar 15, 2023 at 09:29 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -823,12 +823,12 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`idProduct`, `idCategory`, `nameProduct`, `price`, `description`, `type`, `status`, `total`, `img`, `productRating`) VALUES
-(1, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 0),
-(2, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 0),
+(1, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 2),
+(2, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 3),
 (3, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 0),
 (4, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 0),
 (5, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 0),
-(6, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 3),
+(6, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 3.6),
 (7, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 3),
 (8, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 3),
 (9, NULL, 'quan', 324, 'dafadfewfeqfqw', 'white', 'sold out', 1000, 'eqrqrefg23ee1', 3),
@@ -940,13 +940,7 @@ CREATE TABLE `rating` (
 
 INSERT INTO `rating` (`idComment`, `idProduct`, `idUser`, `content`, `star`, `dateComment`) VALUES
 (1, 1, 1, 'undefined', 0, 0),
-(9, 1, 1, 'as12345fafadsf99999', 0, 10),
-(10, 1, 1, 'as12345fafadsf99999', 4, 10),
-(11, 2, 1, 'as12345fafadsf99999', 4, 10),
-(12, 2, 2, 'as12345fafadsf99999', 2, 10),
-(13, 2, 2, 'as12345fafadsf99999', 2, 10),
 (14, 6, 1, 'as12345fafadsf99999', 2, 10),
-(15, 6, 2, 'as12345fafadsf99999', 4, 10),
 (16, 6, 5, 'as12345fafadsf99999', 3, 10),
 (17, 6, 5, 'as12345fafadsf99999', 3, 10),
 (18, 6, 5, 'as12345fafadsf99999', 3, 10),
@@ -954,7 +948,8 @@ INSERT INTO `rating` (`idComment`, `idProduct`, `idUser`, `content`, `star`, `da
 (20, 6, 5, 'as12345fafadsf99999', 3, 10),
 (21, 6, 5, 'as12345fafadsf99999', 3, 10),
 (22, 6, 5, 'as12345fafadsf99999', 3, 10),
-(23, 6, 5, 'as12345fafadsf99999', 3, 10);
+(23, 6, 5, 'as12345fafadsf99999', 3, 10),
+(24, 6, 5, 'as12345fafadsf99999', 10, 10);
 
 -- --------------------------------------------------------
 
@@ -1053,7 +1048,7 @@ ALTER TABLE `province`
 ALTER TABLE `rating`
   ADD PRIMARY KEY (`idComment`),
   ADD KEY `idProduct` (`idProduct`),
-  ADD KEY `idUser` (`idUser`);
+  ADD KEY `rating_user` (`idUser`);
 
 --
 -- Indexes for table `users`
@@ -1111,7 +1106,7 @@ ALTER TABLE `province`
 -- AUTO_INCREMENT for table `rating`
 --
 ALTER TABLE `rating`
-  MODIFY `idComment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `idComment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -1152,7 +1147,8 @@ ALTER TABLE `product`
 -- Constraints for table `rating`
 --
 ALTER TABLE `rating`
-  ADD CONSTRAINT `rating_ibfk_1` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`);
+  ADD CONSTRAINT `rating_ibfk_1` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`),
+  ADD CONSTRAINT `rating_user` FOREIGN KEY (`idUser`) REFERENCES `users` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
